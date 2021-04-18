@@ -66,7 +66,7 @@ if __name__ == '__main__':
 
     # 1. argparse
     parser = argparse.ArgumentParser()
-    parser.add_argument('--epoch', type=int, default=156)
+    parser.add_argument('--epoch', type=int, default=151)
     parser.add_argument('--save_path', type=str, default='./saves')
     parser.add_argument('--save_file_name', type=str, default='finetuned_pruned')
     parser.add_argument('--pruned_save_file_name', type=str, default='pruned')
@@ -111,7 +111,7 @@ if __name__ == '__main__':
     # 5. data loader
     test_loader = DataLoader(dataset=test_set,
                              shuffle=True,
-                             batch_size=256)
+                             batch_size=128)
 
     criterion = nn.CrossEntropyLoss()
     ###################################################

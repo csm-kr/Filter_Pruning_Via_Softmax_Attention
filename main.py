@@ -31,7 +31,7 @@ def main():
 
     test_loader = DataLoader(dataset=test_set,
                              shuffle=False,
-                             batch_size=256)
+                             batch_size=opts.batch_size)
 
     # model
     model, pruned_model = build_model(opts)
@@ -45,7 +45,7 @@ def main():
                           weight_decay=1e-4,
                           momentum=0.9)
 
-    # 9. scheduler
+    # scheduler
     scheduler = MultiStepLR(optimizer=optimizer, milestones=[opts.milestone_0, opts.milestone_1], gamma=0.1)
     best_acc = 0
 
