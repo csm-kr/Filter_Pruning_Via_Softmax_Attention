@@ -1,0 +1,19 @@
+device: 0
+
+training_parameters:
+  # number
+  lr: 0.1
+  epoch: 50
+  n_classes: 10
+  input_ch: 1
+  batch_size: 128
+
+  # string
+  model: vgg5
+  dataset: mnist
+
+  # array
+  milestone:
+  - 15
+  - 30
+
