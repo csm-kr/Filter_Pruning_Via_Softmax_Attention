@@ -4,13 +4,13 @@ import torch
 from config import device
 
 
-def train(epoch, model, vis, data_loader, criterion, optimizer, opts):
+def train(epoch, model, vis, data_loader, criterion, optimizer, vis_name='training_loss'):
 
+    model.train()
     tic = time.time()
     # 11. train
     for idx, (img, target) in enumerate(data_loader):
 
-        model.train()
         img = img.to(device)  # [N, 1, 28, 28]
         target = target.to(device)  # [N]
         output = model(img)  # [N, 47]
@@ -27,7 +27,7 @@ def train(epoch, model, vis, data_loader, criterion, optimizer, opts):
             vis.line(X=torch.ones((1, 1)) * idx + epoch * len(data_loader),
                      Y=torch.Tensor([loss]).unsqueeze(0),
                      update='append',
-                     win='loss',
+                     win=vis_name,
                      opts=dict(x_label='step',
                                y_label='loss',
                                title='loss',

@@ -414,20 +414,21 @@ def build_model(opts):
 
 if __name__ == '__main__':
 
-    input = torch.randn([2, 1, 28, 28])
+    batch_size = 2
+    input = torch.randn([batch_size, 1, 28, 28])
 
     model = VGG5_DWC(n_classes=10, input_ch=1, pruning_ratio=0.75, relative=True)
     print(model(input).size())
     macs, params = profile(model, inputs=(input,))
-    print("flops :", macs)
+    print("flops :", macs / batch_size)
     print("params : ", params)
 
     # ------------------------ for cifar 10 ----------------------------
-    input = torch.randn([2, 3, 32, 32])
-    model = VGG16(input_ch=3)
-    # model = VGG16_DWC(input_ch=3, pruning_ratio=0.875, relative=True)
-    # print(model(input).size())
-
-    macs, params = profile(model, inputs=(input,))
-    print("flops :", macs / 2)
-    print("params : ", params)
+    # input = torch.randn([2, 3, 32, 32])
+    # model = VGG16(input_ch=3)
+    # # model = VGG16_DWC(input_ch=3, pruning_ratio=0.875, relative=True)
+    # # print(model(input).size())
+    #
+    # macs, params = profile(model, inputs=(input,))
+    # print("flops :", macs / 2)
+    # print("params : ", params)

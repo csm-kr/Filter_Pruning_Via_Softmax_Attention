@@ -11,7 +11,6 @@ from train import train
 from test import test
 import torch.backends.cudnn as cudnn
 cudnn.benchmark = True
-from config import device
 from dataset import build_dataset
 from config import parser
 
@@ -53,10 +52,11 @@ def main():
     ###################################################
     #             training and pruning
     ###################################################
+
     print("training and pruing...")
     for epoch in range(opts.epoch):
 
-        train(epoch, model, vis, train_loader, criterion, optimizer, opts)
+        train(epoch, model, vis, train_loader, criterion, optimizer)
         accuracy = test(epoch, model, vis, test_loader, criterion, opts)
         if best_acc < accuracy:
             best_acc = accuracy
@@ -67,7 +67,11 @@ def main():
             if not os.path.exists(opts.save_path):
                 os.mkdir(opts.save_path)
             torch.save(pruned_model.state_dict(),
-                       os.path.join(opts.save_path, '{}_{}_{}_{}_{:.4f}.pth.tar'.format(opts.pruned_save_file_name, opts.model_name, opts.dataset_type, opts.pruning_ratio, best_acc)))
+                       os.path.join(opts.save_path, '{}_{}_{}_{}_{:.4f}.pth.tar'.format(opts.pruned_save_file_name,
+                                                                                        opts.model_name,
+                                                                                        opts.dataset_type,
+                                                                                        opts.pruning_ratio,
+                                                                                        best_acc)))
 
         elif best_acc >= accuracy:
 
@@ -81,7 +85,11 @@ def main():
     ###################################################
 
     # load best acc models
-    pruned_model.load_state_dict(torch.load('./saves/{}_{}_{}_{}_{:.4f}.pth.tar'.format(opts.pruned_save_file_name, opts.model_name, opts.dataset_type, opts.pruning_ratio, best_acc)))
+    pruned_model.load_state_dict(torch.load('./saves/{}_{}_{}_{}_{:.4f}.pth.tar'.format(opts.pruned_save_file_name,
+                                                                                        opts.model_name,
+                                                                                        opts.dataset_type,
+                                                                                        opts.pruning_ratio,
+                                                                                        best_acc)))
 
     # optimizer
     optimizer = optim.SGD(params=pruned_model.parameters(),
@@ -89,14 +97,14 @@ def main():
                           weight_decay=1e-4,
                           momentum=0.9)
     # scheduler
-    scheduler = MultiStepLR(optimizer=optimizer, milestones=[100, 150], gamma=0.1)
+    scheduler = MultiStepLR(optimizer=optimizer, milestones=[opts.milestone_0, opts.milestone_1], gamma=0.1)
     best_acc = 0
 
     for epoch in range(opts.epoch):
         print("finetuning...")
 
-        train(epoch, model, vis, train_loader, criterion, optimizer, opts)
-        accuracy = test(epoch, pruned_model, vis, test_loader, criterion, opts)
+        train(epoch, pruned_model, vis, train_loader, criterion, optimizer, vis_name='finetuning_loss')
+        accuracy = test(epoch, pruned_model, vis, test_loader, criterion, opts, vis_name='finetuning_test')
 
         if best_acc < accuracy:
             best_acc = accuracy
@@ -104,8 +112,11 @@ def main():
             if not os.path.exists(opts.save_path):
                 os.mkdir(opts.save_path)
             torch.save(pruned_model.state_dict(),
-                       os.path.join(opts.save_path, '{}_{}_{}_{}_{:.4f}.pth.tar'.format(opts.save_file_name, opts.model_name, opts.dataset_type, opts.pruning_ratio, best_acc)))
-
+                       os.path.join(opts.save_path, '{}_{}_{}_{}_{}.pth.tar'.format(opts.save_file_name,
+                                                                                    opts.model_name,
+                                                                                    opts.dataset_type,
+                                                                                    opts.pruning_ratio,
+                                                                                    epoch)))
         elif best_acc >= accuracy:
 
             print("current_accuracy : {:.4f}%".format(accuracy * 100.))

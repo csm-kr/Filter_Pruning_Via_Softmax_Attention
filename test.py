@@ -4,17 +4,17 @@ import torch
 from config import device
 
 
-def test(epoch, model, vis, data_loader, criterion, opts, load=False):
+def test(epoch, model, vis, data_loader, criterion, opts, vis_name='pruning_test', load=False):
 
     print('Validation of epoch [{}]'.format(epoch))
     model.eval()
     if load:
-        state_dict = torch.load(os.path.join(opts.save_path) + '{}_{}_{}_{}_{:.4f}.pth.tar'.format(opts.save_file_name,
-                                                                                                   opts.model_name,
-                                                                                                   opts.dataset_type,
-                                                                                                   opts.pruning_ratio,
-                                                                                                   opts.best_acc)
-                                .format(opts.pruning_ratio, epoch), map_location=device)
+        state_dict = torch.load(os.path.join(opts.save_path, '{}_{}_{}_{}_{}.pth.tar'.format(opts.save_file_name,
+                                                                                             opts.model_name,
+                                                                                             opts.dataset_type,
+                                                                                             opts.pruning_ratio,
+                                                                                             opts.epoch)),
+                                map_location=device)
         model.load_state_dict(state_dict)
 
     correct = 0
@@ -46,7 +46,7 @@ def test(epoch, model, vis, data_loader, criterion, opts, load=False):
         vis.line(X=torch.ones((1, 2)) * epoch,
                  Y=torch.Tensor([accuracy, val_avg_loss]).unsqueeze(0),
                  update='append',
-                 win='test',
+                 win=vis_name,
                  opts=dict(x_label='epoch',
                            y_label='test_',
                            title='test_loss',
@@ -64,21 +64,22 @@ if __name__ == '__main__':
     from torch.utils.data import DataLoader
     import torch.nn as nn
 
-
     # 1. argparse
     parser = argparse.ArgumentParser()
-    parser.add_argument('--epoch', type=int, default=151)
+    parser.add_argument('--epoch', type=int, default=156)
     parser.add_argument('--save_path', type=str, default='./saves')
-    parser.add_argument('--save_file_name', type=str, default='finetuned_pruned_vgg16')
-    parser.add_argument('--pruned_save_file_name', type=str, default='pruned_vgg16')
+    parser.add_argument('--save_file_name', type=str, default='finetuned_pruned')
+    parser.add_argument('--pruned_save_file_name', type=str, default='pruned')
     parser.add_argument('--n_classes', type=int, default=10, help='100, 10, 47, ...')
     parser.add_argument('--batch_size', type=int, default=128)
 
-    parser.add_argument('--dataset_type', type=str, default='cifar_10', help='cifar100, cifar10')        # FIXME
-    parser.add_argument('--pruning_ratio', type=float, default=0.75)                                    # FIXME
+    parser.add_argument('--dataset_type', type=str, default='cifar10', help='cifar100, cifar10')        # FIXME
+    parser.add_argument('--model_name', type=str, default='vgg16')                                      # FIXME
+    parser.add_argument('--pruning_ratio', type=float, default=0.75)                                     # FIXME
     test_opts = parser.parse_args()
     print(test_opts)
 
+    vis = None
 
     # 4. dataset
     transform = tfs.Compose([
@@ -118,4 +119,4 @@ if __name__ == '__main__':
     ###################################################
     # 6. model
     pruned_model = VGG16_DWC(n_classes=test_opts.n_classes, input_ch=test_opts.input_ch, pruning_ratio=test_opts.pruning_ratio, relative=True).to(device)
-    test(test_opts.epoch, pruned_model, test_loader, criterion, test_opts)
+    test(test_opts.epoch, pruned_model, vis, test_loader, criterion, test_opts, load=True)
