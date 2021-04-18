@@ -1,0 +1,19 @@
+device: 0
+
+training_parameters:
+  # number
+  lr: 0.1
+  epoch: 160
+  n_classes: 10
+  input_ch: 3
+  batch_size: 128
+
+  # string
+  model: vgg16
+  dataset: cifar10
+
+  # array
+  milestone:
+  - 80
+  - 120
+
