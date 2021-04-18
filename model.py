@@ -4,6 +4,7 @@ import torch.nn as nn
 from thop import profile
 from rdwc import depthwise_separable_conv
 from config import device
+import torchvision
 
 
 class VGG5(nn.Module):
