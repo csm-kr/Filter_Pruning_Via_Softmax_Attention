@@ -13,6 +13,9 @@ def parser(args):
     parser.add_argument('--config_path', type=str, default='./yaml_files/mnist.yaml')   # FIXME
 
     yaml_path = './yaml_files/mnist.yaml'
+    # yaml_path = './yaml_files/cifar10.yaml.yaml'
+    # yaml_path = './yaml_files/fashionmnist.yaml'
+
     with open(yaml_path) as config_file:
         config = yaml.safe_load(config_file)
         print(config)
@@ -32,7 +35,7 @@ def parser(args):
     parser.add_argument('--save_path', type=str, default='./saves')
     parser.add_argument('--save_file_name', type=str, default='finetuned_pruned')
     parser.add_argument('--pruned_save_file_name', type=str, default='pruned')
-    parser.add_argument('--pruning_ratio', type=float, default=0.75)
+    parser.add_argument('--pruning_ratio', type=float, default=0.875)
 
     opts = parser.parse_args()
     print(opts)
