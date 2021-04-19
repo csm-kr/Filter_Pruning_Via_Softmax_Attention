@@ -419,7 +419,8 @@ if __name__ == '__main__':
 
     # ------------------------ for mnist ----------------------------
     input = torch.randn([batch_size, 1, 28, 28])
-    model = VGG5_DWC(n_classes=10, input_ch=1, pruning_ratio=0.875, relative=True)
+    model = VGG5_DWC(n_classes=10, input_ch=1, pruning_ratio=0.5, relative=True)
+    #model = VGG5(n_classes=10, input_ch=1)
 
     macs, params = profile(model, inputs=(input,))
     print("flops :", macs / batch_size)

@@ -8,6 +8,7 @@ data/
 *.tmp
 
 # train
+save_file
 saves/
 results/
 
