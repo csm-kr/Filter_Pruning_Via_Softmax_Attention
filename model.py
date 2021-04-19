@@ -419,14 +419,22 @@ if __name__ == '__main__':
 
     # ------------------------ for mnist ----------------------------
     input = torch.randn([batch_size, 1, 28, 28])
-    model = VGG5_DWC(n_classes=10, input_ch=1, pruning_ratio=0.5, relative=True)
-    #model = VGG5(n_classes=10, input_ch=1)
+    model = VGG5_DWC(n_classes=10, input_ch=1, pruning_ratio=1.0, relative=True)
+    # model = VGG5(n_classes=10, input_ch=1)
 
     macs, params = profile(model, inputs=(input,))
     print("flops :", macs / batch_size)
     print("params : ", params)
 
     '''
+    original
+    flops : 161606144.0
+    params :  3646154.0
+    
+    1.0
+    flops : 21001760.0
+    params :  564308.0
+    
     0.875    
     flops : 16428592.0
     params :  452044.0
@@ -442,13 +450,18 @@ if __name__ == '__main__':
 
     # ------------------------ for cifar 10 ----------------------------
     input = torch.randn([batch_size, 3, 32, 32])
-    model = VGG16_DWC(n_classes=10, input_ch=3, pruning_ratio=0.5, relative=True)
+    # model = VGG16_DWC(n_classes=10, input_ch=3, pruning_ratio=0.5, relative=True)
+    model = VGG16(n_classes=10, input_ch=3)
 
     macs, params = profile(model, inputs=(input,))
     print("flops :", macs / batch_size)
     print("params : ", params)
 
     '''
+    original
+    flops : 314294272.0
+    params :  14991946.0
+    
     0.875    
     flops : 30687232.0
     params :  1560304.0
