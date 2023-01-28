@@ -2,7 +2,7 @@
 
 ### Introduction
 
-:octocat: An Official Code for **Filter Pruning Via Softmax Attention** [paper](https://ieeexplore.ieee.org/document/9190715) in ICIP 2021
+:octocat: An Official Code for **Filter Pruning Via Softmax Attention** [paper](https://ieeexplore.ieee.org/abstract/document/9506724) in ICIP 2021
 
 The goal of this tasks is efficiently pruning the network. 
 
@@ -36,11 +36,11 @@ classification
 
 ## Citation
 
-@inproceedings{jung2020upright,
-  title={Upright adjustment with graph convolutional networks},
-  author={Jung, Raehyuk and Cho, Sungmin and Kwon, Junseok},
-  booktitle={2020 IEEE International Conference on Image Processing (ICIP)},
-  pages={1058--1062},
-  year={2020},
+@inproceedings{cho2021filter,
+  title={Filter pruning via softmax attention},
+  author={Cho, Sungmin and Kim, Hyeseong and Kwon, Junseok},
+  booktitle={2021 IEEE International Conference on Image Processing (ICIP)},
+  pages={3507--3511},
+  year={2021},
   organization={IEEE}
 }
