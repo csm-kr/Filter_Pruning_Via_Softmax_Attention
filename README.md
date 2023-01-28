@@ -2,8 +2,7 @@
 
 ### Introduction
 
-:octocat: An Official Code for **Filter Pruning Via Softmax Attention**
-% # [paper](https://ieeexplore.ieee.org/document/9190715) in ICIP 2021
+:octocat: An Official Code for **Filter Pruning Via Softmax Attention** [paper](https://ieeexplore.ieee.org/document/9190715) in ICIP 2021
 
 The goal of this tasks is efficiently pruning the network. 
 
