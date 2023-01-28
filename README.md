@@ -18,9 +18,6 @@ The goal of this tasks is efficiently pruning the network.
 - matplotlib
 - numba
 ```
-
-### Network
-
 ### Results
 
 classification
@@ -37,11 +34,13 @@ classification
 |papers      | CIFAR10           |  VGG16       | 23.06M |  1.19M   |90.80    |0.75         |
 |papers      | CIFAR10           |  VGG16       | 11.06M |  0.59M   |88.69    |0.5          |
 
-### Quick start
-
-#### Training
-
-#### Testing
-
 ## Citation
 
+@inproceedings{jung2020upright,
+  title={Upright adjustment with graph convolutional networks},
+  author={Jung, Raehyuk and Cho, Sungmin and Kwon, Junseok},
+  booktitle={2020 IEEE International Conference on Image Processing (ICIP)},
+  pages={1058--1062},
+  year={2020},
+  organization={IEEE}
+}
