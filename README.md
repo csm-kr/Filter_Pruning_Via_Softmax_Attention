@@ -35,7 +35,7 @@ classification
 |papers      | CIFAR10           |  VGG16       | 11.06M |  0.59M   |88.69    |0.5          |
 
 ## Citation
-
+```
 @inproceedings{cho2021filter,
   title={Filter pruning via softmax attention},
   author={Cho, Sungmin and Kim, Hyeseong and Kwon, Junseok},
@@ -44,3 +44,4 @@ classification
   year={2021},
   organization={IEEE}
 }
+```
